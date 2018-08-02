@@ -34,9 +34,9 @@ namespace Arshid.Web.Repositories
                                         gu.UserID,
                                         gu.Name,
                                         gu.Address,
-                                        PassportNumber,
-                                        gu.GroupID,
-                                        g.Name AS GroupName
+                                        gu.PassportNumber, gu.Gender, gu.ContactNumber,
+                                        gu.GroupID, gu.Age,
+                                        g.Name AS GroupName, g.GroupContact
                                         FROM 
                                         GlobalUsers gu
                                         LEFT JOIN Groups g ON g.GroupID = gu.GroupID
@@ -59,7 +59,13 @@ namespace Arshid.Web.Repositories
                     
                     user.Longitude = loc?.Longitude;
                     user.Latitude = loc?.Latitude;
-                    user.UserGroup = new Group { Name = user.GroupName };
+                    user.UserGroup = new Group
+                    {
+                        GroupID = user.GroupID,
+                        Name = user.GroupName,
+                        GroupContact = user.GroupContact,
+                        LocationName = "Muzdalifah"
+                    };
 
                     resultData.Status = true;
                     resultData.Message = "Success";
@@ -88,9 +94,9 @@ namespace Arshid.Web.Repositories
                                         gu.UserID,
                                         gu.Name,
                                         gu.Address,
-                                        PassportNumber,
-                                        gu.GroupID,
-                                        g.Name AS GroupName
+                                        gu.PassportNumber, gu.Gender, gu.ContactNumber,
+                                        gu.GroupID, gu.Age,
+                                        g.Name AS GroupName, g.GroupContact
                                         FROM 
                                         GlobalUsers gu
                                         LEFT JOIN Groups g ON g.GroupID = gu.GroupID
@@ -101,30 +107,36 @@ namespace Arshid.Web.Repositories
                     User user = result.First();
 
                     string groupSql = @"
-                                        SELECT Latitude, Longitude, UserID FROM userlocations l 
+                                        SELECT Latitude, Longitude, Count(UserID) AS TotalCount FROM userlocations l 
                                         WHERE groupid=@GroupID AND
-                                         l.AddedDate = 
-                                         (SELECT max(AddedDate) FROM userlocations WHERE userid=l.UserID);
+                                        l.AddedDate = 
+                                        (SELECT max(AddedDate) FROM userlocations WHERE userid=l.UserID)
+                                        GROUP BY Latitude,Longitude
+                                        ORDER BY TotalCount DESC 
+                                        LIMIT 1
                                   ";
 
-                    var users = await dbConnection.QueryAsync<User>(groupSql, new { GroupID = user.GroupID });
+                    var users = await dbConnection.QueryAsync<Group>(groupSql, new { GroupID = user.GroupID });
 
-                    if (users!=null && users.Count() != 0)
+                    if (users != null && users.Count() != 0)
                     {
-                        var userGroup = users?.ToList()
-                        .GroupBy(g => new { Latitude = g.Latitude, Longitude = g.Longitude })
-                        .Select(x => new Group()
-                        {
-                            Latitude = x.FirstOrDefault().Latitude,
-                            Longitude = x.FirstOrDefault().Longitude,
-                            TotalCount = x.Count()
-                        }).OrderByDescending(y => y.TotalCount).First();
+                        //var userGroup = users?.ToList()
+                        //.GroupBy(g => new { Latitude = g.Latitude, Longitude = g.Longitude })
+                        //.Select(x => new Group()
+                        //{
+                        //    Latitude = x.FirstOrDefault().Latitude,
+                        //    Longitude = x.FirstOrDefault().Longitude,
+                        //    TotalCount = x.Count()
+                        //}).OrderByDescending(y => y.TotalCount).First();
 
-
+                        var userGroup = users.First();
+                        userGroup.GroupID = user.GroupID;
                         userGroup.Name = user.GroupName;
+                        userGroup.GroupContact = user.GroupContact;
+                        userGroup.LocationName = "Muzdalifah";
                         user.UserGroup = userGroup;
                     }
-                        
+
 
 
                     resultData.Status = true;
@@ -208,6 +220,7 @@ namespace Arshid.Web.Repositories
                         .Select(x => new Group
                         {
                             Name = x.FirstOrDefault().Name,
+                            GroupID = x.FirstOrDefault().GroupID,
                             UserCount = x.Count(),
                             LocatedGroup = x
                                 .Select(y => new User

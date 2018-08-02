@@ -12,6 +12,9 @@ namespace Arshid.Web.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string PassportNumber { get; set; }
+        public string Gender { get; set; }
+        public string ContactNumber { get; set; }
+        public string Age { get; set; }
 
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
@@ -20,6 +23,8 @@ namespace Arshid.Web.Models
         public int? GroupID { get; set; }
         [JsonIgnore]
         public string GroupName { get; set; }
+        [JsonIgnore]
+        public string GroupContact { get; set; }
 
         public Group UserGroup { get; set; }
     }
