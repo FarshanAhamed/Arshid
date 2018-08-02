@@ -1,4 +1,5 @@
 ﻿using Arshid.Configuration;
+using Arshid.Web.Constants;
 using Arshid.Web.Interfaces;
 using Arshid.Web.Models;
 using Arshid.Web.Models.InsertModels;
@@ -47,7 +48,7 @@ namespace Arshid.Web.Repositories
                     User user = result.First();
 
                     string groupSql = @"
-                                        SELECT Latitude, Longitude FROM userlocations
+                                        SELECT Latitude, Longitude, AddedDate FROM userlocations
                                         WHERE userid=@UserID AND
                                          AddedDate = 
                                          (SELECT max(AddedDate) FROM userlocations WHERE userid=@UserID);
@@ -59,12 +60,21 @@ namespace Arshid.Web.Repositories
                     
                     user.Longitude = loc?.Longitude;
                     user.Latitude = loc?.Latitude;
+                    user.AddedDate = loc?.AddedDate;
+
+                    // Get the current waypoint
+                    var waypointList = WayPoints.GetWayPointList();
+                    var waypointDict = WayPoints.GetWayPointDict();
+
+                    string currentKey = user.Latitude + "" + user.Longitude;
+                    var currLocation = waypointDict[currentKey];
+
                     user.UserGroup = new Group
                     {
                         GroupID = user.GroupID,
                         Name = user.GroupName,
                         GroupContact = user.GroupContact,
-                        LocationName = "Muzdalifah",
+                        LocationName = currLocation?.Name,
                         Country = user.Country
                     };
 
@@ -108,7 +118,8 @@ namespace Arshid.Web.Repositories
                     User user = result.First();
 
                     string groupSql = @"
-                                        SELECT Latitude, Longitude, Count(UserID) AS TotalCount FROM userlocations l 
+                                        SELECT Latitude, Longitude, Count(UserID) AS TotalCount, max(AddedDate) AS AddedDate
+                                        FROM userlocations l 
                                         WHERE groupid=@GroupID AND
                                         l.AddedDate = 
                                         (SELECT max(AddedDate) FROM userlocations WHERE userid=l.UserID)
@@ -131,10 +142,18 @@ namespace Arshid.Web.Repositories
                         //}).OrderByDescending(y => y.TotalCount).First();
 
                         var userGroup = users.First();
+
+                        // Get the current waypoint
+                        var waypointList = WayPoints.GetWayPointList();
+                        var waypointDict = WayPoints.GetWayPointDict();
+
+                        string currentKey = userGroup.Latitude + "" + userGroup.Longitude;
+                        var currLocation = waypointDict[currentKey];
+
                         userGroup.GroupID = user.GroupID;
                         userGroup.Name = user.GroupName;
                         userGroup.GroupContact = user.GroupContact;
-                        userGroup.LocationName = "Muzdalifah";
+                        userGroup.LocationName = currLocation.Name;
                         userGroup.Country = user.Country;
                         user.UserGroup = userGroup;
                     }
