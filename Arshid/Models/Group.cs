@@ -13,7 +13,12 @@ namespace Arshid.Web.Models
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
 
+        public int UserCount { get; set; }
+
         [JsonIgnore]
         public int TotalCount { get; set; }
+
+        [JsonIgnore]
+        public Group LocatedGroup { get; set; }
     }
 }

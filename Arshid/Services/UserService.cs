@@ -83,5 +83,23 @@ namespace Arshid.Web.Services
                 };
             }
         }
+
+        public async Task<ResultData<List<Group>>> GenerateHeatmap()
+        {
+            try
+            {
+                var userDetails = await _userRepository.GenerateHeatMap();
+                return userDetails;
+            }
+            catch (Exception ex)
+            {
+                return new ResultData<List<Group>>
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
     }
 }

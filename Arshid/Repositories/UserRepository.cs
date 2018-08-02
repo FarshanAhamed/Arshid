@@ -184,5 +184,66 @@ namespace Arshid.Web.Repositories
                 return resultData;
             }
         }
+
+        public async Task<ResultData<List<Group>>> GenerateHeatMap()
+        {
+            ResultData<List<Group>> resultData = new ResultData<List<Group>>();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    // Take latest location of all user
+                    string sql = @"
+                                    SELECT l.Latitude, l.Longitude, l.UserID, l.GroupID, g.Name 
+                                    FROM userlocations l
+                                    LEFT JOIN Groups g ON (g.GroupID = l.GroupID)
+                                    WHERE l.AddedDate = 
+                                        (SELECT max(AddedDate) FROM userlocations WHERE userid=l.UserID);
+                                  ";
+                    var userList = await dbConnection.QueryAsync<User>(sql);
+
+                    // Group the users by their group id
+                    var groupList = userList.GroupBy(g => g.GroupID)
+                        .Select(x => new Group
+                        {
+                            Name = x.FirstOrDefault().Name,
+                            UserCount = x.Count(),
+                            LocatedGroup = x
+                                .Select(y => new User
+                                {
+                                    UserID = y.UserID,
+                                    Latitude = y.Latitude,
+                                    Longitude = y.Longitude
+                                })
+                                .GroupBy(g2 => new { Latitude = g2.Latitude, Longitude = g2.Longitude })
+                                .Select(j => new Group()
+                                {
+                                    Latitude = j.FirstOrDefault().Latitude,
+                                    Longitude = j.FirstOrDefault().Longitude,
+                                    TotalCount = j.Count()
+                                }).OrderByDescending(k => k.TotalCount).First()
+                        }).ToList();
+
+                    foreach (var group in groupList)
+                    {
+                        group.Latitude = group.LocatedGroup.Latitude;
+                        group.Longitude = group.LocatedGroup.Longitude;
+                    }
+
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    resultData.Data = groupList;
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
     }
 }

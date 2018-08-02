@@ -12,5 +12,6 @@ namespace Arshid.Web.Interfaces
         Task<ResultData> SaveUserLocation (UserLocationInsertModel userLocation );
         Task<ResultData<User>> GetUserGroupDetails(int userID);
         Task<ResultData<User>> GetUserDetails(int userID);
+        Task<ResultData<List<Group>>> GenerateHeatMap();
     }
 }
