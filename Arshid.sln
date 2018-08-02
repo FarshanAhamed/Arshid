@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arshid", "Arshid\Arshid.csproj", "{2855477F-252D-40E2-8750-CEF9389292EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseMigrator", "DatabaseMigrator\DatabaseMigrator.csproj", "{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseMigrator", "DatabaseMigrator\DatabaseMigrator.csproj", "{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arshid.Web", "Arshid\Arshid.Web.csproj", "{203B9477-3C59-4849-933E-7E912A530994}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{C3050E82-1311-4B32-B58B-AF137A8AC71E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arshid.Configuration", "Configuration\Arshid.Configuration\Arshid.Configuration.csproj", "{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arshid.Configuration", "Configuration\Arshid.Configuration\Arshid.Configuration.csproj", "{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{926823FE-F85E-47E7-8E02-E158C126CAE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arshid.Data", "Arshid.Data\Arshid.Data.csproj", "{7D5E3009-2551-435A-B8CB-0357DC1D2022}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,20 +21,29 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2855477F-252D-40E2-8750-CEF9389292EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2855477F-252D-40E2-8750-CEF9389292EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2855477F-252D-40E2-8750-CEF9389292EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2855477F-252D-40E2-8750-CEF9389292EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203B9477-3C59-4849-933E-7E912A530994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203B9477-3C59-4849-933E-7E912A530994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203B9477-3C59-4849-933E-7E912A530994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203B9477-3C59-4849-933E-7E912A530994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B} = {C3050E82-1311-4B32-B58B-AF137A8AC71E}
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022} = {926823FE-F85E-47E7-8E02-E158C126CAE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D544EEF-9B3B-40FE-8064-7F3A7DDF84B9}
