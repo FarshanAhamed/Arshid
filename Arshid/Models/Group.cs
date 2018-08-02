@@ -19,6 +19,7 @@ namespace Arshid.Web.Models
 
 
         public int UserCount { get; set; }
+        public WayPoint NextLocation { get; set; }
 
         [JsonIgnore]
         public int TotalCount { get; set; }

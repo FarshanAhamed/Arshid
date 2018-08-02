@@ -1,4 +1,5 @@
-﻿using Arshid.Web.Interfaces;
+﻿using Arshid.Web.Constants;
+using Arshid.Web.Interfaces;
 using Arshid.Web.Models;
 using Arshid.Web.Models.InsertModels;
 using System;
@@ -71,6 +72,15 @@ namespace Arshid.Web.Services
                     };
                 }
 
+                // Get the next waypoint
+                var waypointList = WayPoints.GetWayPointList();
+                var waypointDict = WayPoints.GetWayPointDict();
+
+                string currentKey = userLocation.Latitude + "" + userLocation.Longitude;
+                int currentIndex = waypointDict[currentKey].Number;
+
+                if (currentIndex + 1 < waypointList.Count)
+                    userDetails.Data.UserGroup.NextLocation = waypointList[currentIndex + 1];
                 
                 return userDetails;
             }
@@ -106,8 +116,13 @@ namespace Arshid.Web.Services
         {
             try
             {
-                var userDetails = await _userRepository.GetStats();
-                return userDetails;
+                var result = await _userRepository.GetStats();
+
+                Stats stats = result.Data;
+                stats.AreaCount = WayPoints.GetWayPointList().Count;
+                stats.HiglyActivateAreaCount = stats.AreaCount / 10;
+
+                return result;
             }
             catch (Exception ex)
             {

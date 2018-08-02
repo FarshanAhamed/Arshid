@@ -128,11 +128,7 @@ namespace Arshid.Controllers
                     return new ObjectResult(errorResponse);
                 }
 
-                Stats stats = result.Data;
-                stats.AreaCount = WayPoints.GetWayPointList().Count;
-                stats.HiglyActivateAreaCount = stats.AreaCount / 10;
-
-                var success = ArshidResponse<Object>.SetResponse("AUE100", result.Message, stats);
+                var success = ArshidResponse<Object>.SetResponse("AUE100", result.Message, result.Data);
                 return new ObjectResult(success);
             }
             catch (Exception ex)
