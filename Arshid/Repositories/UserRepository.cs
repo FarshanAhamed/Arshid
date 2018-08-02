@@ -36,7 +36,7 @@ namespace Arshid.Web.Repositories
                                         gu.Address,
                                         gu.PassportNumber, gu.Gender, gu.ContactNumber,
                                         gu.GroupID, gu.Age,
-                                        g.Name AS GroupName, g.GroupContact
+                                        g.Name AS GroupName, g.GroupContact, g.Country
                                         FROM 
                                         GlobalUsers gu
                                         LEFT JOIN Groups g ON g.GroupID = gu.GroupID
@@ -64,7 +64,8 @@ namespace Arshid.Web.Repositories
                         GroupID = user.GroupID,
                         Name = user.GroupName,
                         GroupContact = user.GroupContact,
-                        LocationName = "Muzdalifah"
+                        LocationName = "Muzdalifah",
+                        Country = user.Country
                     };
 
                     resultData.Status = true;
@@ -96,7 +97,7 @@ namespace Arshid.Web.Repositories
                                         gu.Address,
                                         gu.PassportNumber, gu.Gender, gu.ContactNumber,
                                         gu.GroupID, gu.Age,
-                                        g.Name AS GroupName, g.GroupContact
+                                        g.Name AS GroupName, g.GroupContact, g.Country
                                         FROM 
                                         GlobalUsers gu
                                         LEFT JOIN Groups g ON g.GroupID = gu.GroupID
@@ -134,6 +135,7 @@ namespace Arshid.Web.Repositories
                         userGroup.Name = user.GroupName;
                         userGroup.GroupContact = user.GroupContact;
                         userGroup.LocationName = "Muzdalifah";
+                        userGroup.Country = user.Country;
                         user.UserGroup = userGroup;
                     }
 
