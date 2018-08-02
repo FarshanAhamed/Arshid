@@ -7,10 +7,12 @@
 
   <ItemGroup>
     <None Remove="Scripts\Scripts001-CreateUserTables.sql" />
+    <None Remove="Scripts\Scripts002-AlterUserLocationTable.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\Scripts001-CreateUserTables.sql" />
+    <EmbeddedResource Include="Scripts\Scripts002-AlterUserLocationTable.sql" />
   </ItemGroup>
 
   <ItemGroup>

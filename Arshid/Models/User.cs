@@ -13,11 +13,13 @@ namespace Arshid.Web.Models
         public string Address { get; set; }
         public string PassportNumber { get; set; }
 
-        public double? Latitiude { get; set; }
+        public double? Latitude { get; set; }
         public double? Longitude { get; set; }
 
         [JsonIgnore]
         public int? GroupID { get; set; }
+        [JsonIgnore]
+        public string GroupName { get; set; }
 
         public Group UserGroup { get; set; }
     }

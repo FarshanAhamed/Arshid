@@ -6,7 +6,7 @@ namespace Arshid.Configuration
 {
     public class ArshidConfiguration
     {
-        public string PgSqlServerConnectionString { get; set; }
+        public string SqlConnectionString { get; set; }
         public string TokenIssuer { get; set; }
         public string TokenAudience { get; set; }
         public string JwtSecretToken { get; set; }
