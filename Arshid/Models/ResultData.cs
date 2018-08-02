@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Arshid.Data
+namespace Arshid.Web.Models
 {
     public class ResultData<T>
     {
