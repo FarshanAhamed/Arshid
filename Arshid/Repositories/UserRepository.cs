@@ -245,5 +245,37 @@ namespace Arshid.Web.Repositories
                 return resultData;
             }
         }
+
+        public async Task<ResultData<Stats>> GetStats()
+        {
+            ResultData<Stats> resultData = new ResultData<Stats>();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    string sql = @"
+                                        SELECT *, 
+	                                        (SELECT COUNT(*) FROM GlobalUsers) AS UserCount,
+                                            (SELECT COUNT(*) FROM Groups) AS GroupCount 
+                                        FROM Groups
+                                        FETCH FIRST 1 ROWS ONLY;
+                                  ";
+
+                    var result = await dbConnection.QueryAsync<Stats>(sql);
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    resultData.Data = result.First();
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
     }
 }
