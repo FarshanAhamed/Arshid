@@ -14,6 +14,7 @@ namespace Arshid.Web.Models
         public double? Longitude { get; set; }
 
         public int UserCount { get; set; }
+        public WayPoint NextLocation { get; set; }
 
         [JsonIgnore]
         public int TotalCount { get; set; }
