@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arshid", "Arshid\Arshid.csproj", "{2855477F-252D-40E2-8750-CEF9389292EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arshid.Web", "Arshid\Arshid.Web.csproj", "{2855477F-252D-40E2-8750-CEF9389292EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{C3050E82-1311-4B32-B58B-AF137A8AC71E}"
 EndProject
