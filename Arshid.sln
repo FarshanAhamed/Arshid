@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arshid", "Arshid\Arshid.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseMigrator", "DatabaseMigrator\DatabaseMigrator.csproj", "{A88D90C6-7AD5-41E5-9B5D-EE0E81671866}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{C3050E82-1311-4B32-B58B-AF137A8AC71E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arshid.Configuration", "Configuration\Arshid.Configuration\Arshid.Configuration.csproj", "{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +28,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B} = {C3050E82-1311-4B32-B58B-AF137A8AC71E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D544EEF-9B3B-40FE-8064-7F3A7DDF84B9}

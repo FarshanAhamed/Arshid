@@ -260,3 +260,7 @@ paket-files/
 __pycache__/
 *.pyc
 DatabaseMigrator/appsettings.Development.json
+
+
+.appsettings.json
+.appsettings.Development.json
