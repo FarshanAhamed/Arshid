@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arshid.Configuration", "Configuration\Arshid.Configuration\Arshid.Configuration.csproj", "{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{926823FE-F85E-47E7-8E02-E158C126CAE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arshid.Data", "Arshid.Data\Arshid.Data.csproj", "{7D5E3009-2551-435A-B8CB-0357DC1D2022}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,17 @@ Global
 		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B40C2B0D-FC48-42C1-B42D-9896E2DB591B} = {C3050E82-1311-4B32-B58B-AF137A8AC71E}
+		{7D5E3009-2551-435A-B8CB-0357DC1D2022} = {926823FE-F85E-47E7-8E02-E158C126CAE6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D544EEF-9B3B-40FE-8064-7F3A7DDF84B9}
