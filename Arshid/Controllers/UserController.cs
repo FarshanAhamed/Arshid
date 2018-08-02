@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Arshid.Controllers
 {
-    [Route("[controller]")]
+    [Route("v1/[controller]")]
     public class UserController : Controller
     {
         private IUserService _userService;
