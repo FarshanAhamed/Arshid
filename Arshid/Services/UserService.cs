@@ -101,5 +101,23 @@ namespace Arshid.Web.Services
             }
 
         }
+
+        public async Task<ResultData<Stats>> GetStats()
+        {
+            try
+            {
+                var userDetails = await _userRepository.GetStats();
+                return userDetails;
+            }
+            catch (Exception ex)
+            {
+                return new ResultData<Stats>
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
     }
 }

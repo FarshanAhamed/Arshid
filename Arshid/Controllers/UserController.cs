@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Arshid.Configuration;
+using Arshid.Web.Constants;
 using Arshid.Web.Interfaces;
+using Arshid.Web.Models;
 using Arshid.Web.Models.InsertModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -109,6 +111,33 @@ namespace Arshid.Controllers
             catch (Exception ex)
             {
                 var response = ArshidResponse<Object>.SetResponse("AUD300", ex.Message, null);
+                return new ObjectResult(response);
+            }
+        }
+
+        [HttpGet("GetStats")]
+        public async Task<IActionResult> GetStats()
+        {
+            try
+            {
+                var result = await _userService.GetStats();
+
+                if (!result.Status)
+                {
+                    var errorResponse = ArshidResponse<Object>.SetResponse("AUE300", result.Message, null);
+                    return new ObjectResult(errorResponse);
+                }
+
+                Stats stats = result.Data;
+                stats.AreaCount = WayPoints.GetWayPointList().Count;
+                stats.HiglyActivateAreaCount = stats.AreaCount / 10;
+
+                var success = ArshidResponse<Object>.SetResponse("AUE100", result.Message, stats);
+                return new ObjectResult(success);
+            }
+            catch (Exception ex)
+            {
+                var response = ArshidResponse<Object>.SetResponse("AUE300", ex.Message, null);
                 return new ObjectResult(response);
             }
         }
