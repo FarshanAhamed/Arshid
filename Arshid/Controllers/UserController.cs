@@ -90,5 +90,27 @@ namespace Arshid.Controllers
             }
         }
 
+        [HttpGet("GenerateHeatmap")]
+        public async Task<IActionResult> GenerateHeatmap()
+        {
+            try
+            {
+                var result = await _userService.GenerateHeatmap();
+
+                if (!result.Status)
+                {
+                    var errorResponse = ArshidResponse<Object>.SetResponse("AUD300", result.Message, null);
+                    return new ObjectResult(errorResponse);
+                }
+
+                var success = ArshidResponse<Object>.SetResponse("AUD100", result.Message, result.Data);
+                return new ObjectResult(success);
+            }
+            catch (Exception ex)
+            {
+                var response = ArshidResponse<Object>.SetResponse("AUD300", ex.Message, null);
+                return new ObjectResult(response);
+            }
+        }
     }
 }
