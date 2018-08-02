@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Arshid.Configuration;
+using Arshid.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,8 @@ namespace Arshid
         {
             services.AddCors();
             services.AddOptions();
+
+            services.AddUserServices();
 
             services.Configure<ArshidConfiguration>(Configuration);
             services.AddMvc();

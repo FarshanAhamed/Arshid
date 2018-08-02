@@ -13,13 +13,13 @@ namespace Arshid.Configuration
 
         public ConnectionManager(IOptions<ArshidConfiguration> options)
         {
-            string connectionString = options.Value.PgSqlServerConnectionString;
+            string connectionString = options.Value.SqlConnectionString;
             _options = options;
         }
 
         public IDbConnection getNew()
         {
-            string connectionString = _options.Value.PgSqlServerConnectionString;
+            string connectionString = _options.Value.SqlConnectionString;
             var connection = new NpgsqlConnection(connectionString);
             return connection;
         }

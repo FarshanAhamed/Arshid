@@ -8,4 +8,10 @@ namespace Arshid.Web.Models
         public string Message { get; set; }
         public T Data { get; set; }
     }
+
+    public class ResultData
+    {
+        public bool Status { get; set; }
+        public string Message { get; set; }
+    }
 }
