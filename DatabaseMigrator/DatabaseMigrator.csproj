@@ -8,11 +8,15 @@
   <ItemGroup>
     <None Remove="Scripts\Scripts001-CreateUserTables.sql" />
     <None Remove="Scripts\Scripts002-AlterUserLocationTable.sql" />
+    <None Remove="Scripts\Scripts004-AddAgeGroupPhone.sql" />
+    <None Remove="Scripts\Sripts003-AddGenderPhone.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\Scripts001-CreateUserTables.sql" />
     <EmbeddedResource Include="Scripts\Scripts002-AlterUserLocationTable.sql" />
+    <EmbeddedResource Include="Scripts\Scripts004-AddAgeGroupPhone.sql" />
+    <EmbeddedResource Include="Scripts\Sripts003-AddGenderPhone.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,7 +28,7 @@
 
   <ItemGroup>
     <None Update="appsettings.Development.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
