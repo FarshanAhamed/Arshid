@@ -81,6 +81,8 @@ namespace Arshid.Web.Services
 
                 if (currentIndex + 1 < waypointList.Count)
                     userDetails.Data.UserGroup.NextLocation = waypointList[currentIndex + 1];
+                else
+                    userDetails.Data.UserGroup.NextLocation = waypointList[0];
                 
                 return userDetails;
             }

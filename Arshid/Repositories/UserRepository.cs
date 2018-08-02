@@ -47,7 +47,7 @@ namespace Arshid.Web.Repositories
                     User user = result.First();
 
                     string groupSql = @"
-                                        SELECT Latitude, Longitude FROM userlocations
+                                        SELECT Latitude, Longitude, AddedDate FROM userlocations
                                         WHERE userid=@UserID AND
                                          AddedDate = 
                                          (SELECT max(AddedDate) FROM userlocations WHERE userid=@UserID);
@@ -59,6 +59,7 @@ namespace Arshid.Web.Repositories
                     
                     user.Longitude = loc?.Longitude;
                     user.Latitude = loc?.Latitude;
+                    user.AddedDate = loc?.AddedDate;
                     user.UserGroup = new Group { Name = user.GroupName };
 
                     resultData.Status = true;
@@ -101,7 +102,7 @@ namespace Arshid.Web.Repositories
                     User user = result.First();
 
                     string groupSql = @"
-                                        SELECT Latitude, Longitude, UserID FROM userlocations l 
+                                        SELECT Latitude, Longitude, UserID, AddedDate FROM userlocations l 
                                         WHERE groupid=@GroupID AND
                                          l.AddedDate = 
                                          (SELECT max(AddedDate) FROM userlocations WHERE userid=l.UserID);
@@ -117,6 +118,7 @@ namespace Arshid.Web.Repositories
                         {
                             Latitude = x.FirstOrDefault().Latitude,
                             Longitude = x.FirstOrDefault().Longitude,
+                            AddedDate = x.FirstOrDefault().AddedDate,
                             TotalCount = x.Count()
                         }).OrderByDescending(y => y.TotalCount).First();
 
