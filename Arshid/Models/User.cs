@@ -25,6 +25,8 @@ namespace Arshid.Web.Models
         public string GroupName { get; set; }
         [JsonIgnore]
         public string GroupContact { get; set; }
+        [JsonIgnore]
+        public string Country { get; set; }
 
         public Group UserGroup { get; set; }
     }

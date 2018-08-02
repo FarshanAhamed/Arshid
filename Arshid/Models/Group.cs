@@ -15,6 +15,7 @@ namespace Arshid.Web.Models
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public string GroupContact { get; set; }
+        public string Country { get; set; }
 
 
         public int UserCount { get; set; }
