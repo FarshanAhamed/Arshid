@@ -311,5 +311,45 @@ namespace Arshid.Web.Repositories
                 return resultData;
             }
         }
+
+
+        public async Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupID)
+        {
+            ResultData<IEnumerable<User>> resultData = new ResultData<IEnumerable<User>>();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    string sql = @"
+                                        SELECT 
+                                        gu.UserID,
+                                        gu.Name, ul.Latitude, ul.Longitude, ul.AddedDate,
+                                        gu.Address,
+                                        gu.PassportNumber, gu.Gender, gu.ContactNumber,
+                                        gu.GroupID, gu.Age                                        
+                                        FROM 
+                                        GlobalUsers gu
+                                        LEFT JOIN userLocations ul ON ul.UserID = gu.UserID 
+                                        AND ul.AddedDate = (SELECT max(AddedDate) FROM userlocations WHERE userid=gu.UserID)
+                                        WHERE gu.GroupID = @GroupID
+                                  ";
+
+                    var result = await dbConnection.QueryAsync<User>(sql, new { GroupID = groupID });
+                    
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    resultData.Data = result;
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
+
     }
 }
