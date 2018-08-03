@@ -10,5 +10,7 @@ namespace Arshid.Web.Models
         public int? UserLocationID { get; set; }
         public int? UserID { get; set; }
         public int? GroupID { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 }

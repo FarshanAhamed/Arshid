@@ -137,5 +137,28 @@ namespace Arshid.Controllers
                 return new ObjectResult(response);
             }
         }
+
+        [HttpPost("GenerateUserLocations")]
+        public async Task<IActionResult> GenerateUserLocations()
+        {
+            try
+            {
+                var result = await _userService.GenerateUserLocations();
+
+                if (!result.Status)
+                {
+                    var errorResponse = ArshidResponse<Object>.SetResponse("AUE300", result.Message, null);
+                    return new ObjectResult(errorResponse);
+                }
+
+                var success = ArshidResponse<Object>.SetResponse("AUE100", result.Message, true);
+                return new ObjectResult(success);
+            }
+            catch (Exception ex)
+            {
+                var response = ArshidResponse<Object>.SetResponse("AUE300", ex.Message, null);
+                return new ObjectResult(response);
+            }
+        }
     }
 }

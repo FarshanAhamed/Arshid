@@ -311,5 +311,107 @@ namespace Arshid.Web.Repositories
                 return resultData;
             }
         }
+
+        public async Task<ResultData<List<Group>>> GetAllGroups()
+        {
+            ResultData<List<Group>> resultData = new ResultData<List<Group>>();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    string sql = @"
+                                        SELECT * FROM Groups g
+                                        LEFT JOIN GlobalUsers u ON (g.GroupID = u.GroupID);
+                                  ";
+
+                    var userList = await dbConnection.QueryAsync<User>(sql);
+
+                    var groupList = userList.GroupBy(g => g.GroupID)
+                        .Select(x => new Group()
+                        {
+                            GroupID = x.FirstOrDefault().GroupID,
+                            UserIDs = x.Select(y => y.UserID.GetValueOrDefault()).ToList()
+                        }).ToList(); 
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    resultData.Data = groupList;
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
+
+        public async Task<ResultData> DeleteAllUserLocations()
+        {
+            ResultData resultData = new ResultData();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    string sql = @"
+                                        DELETE FROM UserLocations;
+                                  ";
+
+                    var result = await dbConnection.ExecuteAsync(sql);
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
+
+        public async Task<ResultData> SaveMultipleUserLocations(
+            List<UserLocation> userLocations)
+        {
+            ResultData resultData = new ResultData();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    string sql = @"
+                                        INSERT INTO 
+                                          userlocations
+                                            (
+                                              userid,
+                                              groupid,
+                                              latitude, longitude
+                                            )
+                                            VALUES (
+                                              @UserID,
+                                              @GroupID,
+                                              @Latitude, @Longitude
+                                            );
+                                  ";
+
+                    var result = await dbConnection.ExecuteAsync(sql, userLocations);
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
     }
 }
