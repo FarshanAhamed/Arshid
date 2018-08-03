@@ -139,6 +139,94 @@ namespace Arshid.Web.Services
 
         }
 
+        public async Task<ResultData> GenerateUserLocations()
+        {
+            try
+            {
+                // Get Groups along with the list of users in it
+                var groupResult = await _userRepository.GetAllGroups();
+                var groupList = groupResult.Data;
+
+                // Get all waypoints
+                var waypointList = WayPoints.GetWayPointList();
+                var waypointDict = WayPoints.GetWayPointDict();
+
+                // Generate list of UserLocation Object
+                List<UserLocation> userLocations = new List<UserLocation>();
+
+                var specialIndex = 20;
+
+                foreach (var group in groupList)
+                {
+                    // find a location to assign the group
+                    Random rnd = new Random();
+                    int index = rnd.Next(150);
+
+                    if (index >= waypointList.Count)
+                    {
+                        index = specialIndex + rnd.Next(8);
+                    }
+
+                    var location = waypointList[index];
+
+                    foreach (var userId in group.UserIDs)
+                    {
+                        UserLocation tmpUserLocation = new UserLocation()
+                        {
+                            UserID = userId, 
+                            GroupID = group.GroupID,
+                            Latitude = location.Latitude,
+                            Longitude = location.Longitude
+                        };
+
+                        // One out of 10 user in a group might be missing
+                        if (rnd.Next(10) == 1)
+                        {
+                            int lostIndex = index + (-2 + rnd.Next(4));
+
+                            if (lostIndex < 0 || lostIndex >= waypointList.Count)
+                            {
+                                userLocations.Add(tmpUserLocation);
+                            }
+                            else
+                            {
+                                userLocations.Add(new UserLocation() {
+                                    UserID = userId,
+                                    GroupID = group.GroupID,
+                                    Latitude = waypointList[lostIndex].Latitude,
+                                    Longitude = waypointList[lostIndex].Longitude
+                                });
+                            }
+
+
+                        }
+                        else
+                        {
+                            userLocations.Add(tmpUserLocation);
+                        }
+                    }
+                }
+
+                // Delete all the data in UserLocations
+                await _userRepository.DeleteAllUserLocations();
+
+                await _userRepository.SaveMultipleUserLocations(userLocations);
+
+                return new ResultData
+                {
+                    Status = true
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResultData
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
 
         public async Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupId)
         {
@@ -185,6 +273,5 @@ namespace Arshid.Web.Services
             }
             
         }
-
     }
 }

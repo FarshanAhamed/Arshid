@@ -27,6 +27,9 @@ namespace Arshid.Web.Models
         public int TotalCount { get; set; }
 
         [JsonIgnore]
+        public List<int> UserIDs { get; set; }
+
+        [JsonIgnore]
         public Group LocatedGroup { get; set; }
     }
 }
