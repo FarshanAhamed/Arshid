@@ -4,7 +4,9 @@ using Arshid.Web.Models;
 using Arshid.Web.Models.InsertModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Arshid.Web.Services
@@ -243,6 +245,33 @@ namespace Arshid.Web.Services
                 };
             }
 
+        }
+
+
+        public async Task<ResultData> ResetDatabase()
+        {
+            try
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                string sql;
+                using (Stream stream = assembly.GetManifestResourceStream("Arshid.Web.Constants.ResetDatabase.sql"))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    sql = reader.ReadToEnd();
+                }
+
+                var result = await _userRepository.ResetDatabase(sql);
+                return result;
+            }
+            catch(Exception ex)
+            {
+                return new ResultData
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+            
         }
     }
 }

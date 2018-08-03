@@ -19,5 +19,6 @@ namespace Arshid.Web.Interfaces
         Task<ResultData> SaveMultipleUserLocations(
             List<UserLocation> userLocations);
         Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupID);
+        Task<ResultData> ResetDatabase(string newsql);
     }
 }

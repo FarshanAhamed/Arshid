@@ -16,5 +16,6 @@ namespace Arshid.Web.Interfaces
         Task<ResultData<Stats>> GetStats();
         Task<ResultData> GenerateUserLocations();
         Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupId);
+        Task<ResultData> ResetDatabase();
     }
 }

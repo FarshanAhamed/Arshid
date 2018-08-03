@@ -5,11 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Constants\ResetDatabase.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Constants\ResetDatabase.sql" />
   </ItemGroup>
 
   <ItemGroup>

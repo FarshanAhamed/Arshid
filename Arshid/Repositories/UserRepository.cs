@@ -377,7 +377,7 @@ namespace Arshid.Web.Repositories
         public async Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupID)
         {
             ResultData<IEnumerable<User>> resultData = new ResultData<IEnumerable<User>>();
-                    try
+            try
             {
                 using (IDbConnection dbConnection = _connectionManager.getNew())
                 {
@@ -396,7 +396,7 @@ namespace Arshid.Web.Repositories
                                   ";
 
                     var result = await dbConnection.QueryAsync<User>(sql, new { GroupID = groupID });
-                    
+
                     resultData.Status = true;
                     resultData.Message = "Success";
                     resultData.Data = result;
@@ -412,7 +412,7 @@ namespace Arshid.Web.Repositories
         }
 
         public async Task<ResultData> SaveMultipleUserLocations(
-            List<UserLocation> userLocations)
+           List<UserLocation> userLocations)
         {
             ResultData resultData = new ResultData();
 
@@ -440,6 +440,7 @@ namespace Arshid.Web.Repositories
                     resultData.Status = true;
                     resultData.Message = "Success";
                     return resultData;
+
                 }
             }
             catch (Exception ex)
@@ -449,5 +450,38 @@ namespace Arshid.Web.Repositories
                 return resultData;
             }
         }
+
+        public async Task<ResultData> ResetDatabase(string newsql)
+        {
+            ResultData resultData = new ResultData();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+
+                    var result = await dbConnection.ExecuteAsync(newsql);
+
+                    if (result <= 0)
+                    {
+                        resultData.Status = false;
+                        resultData.Message = "Failed";
+                        return resultData;
+                    }
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    return resultData;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
+
     }
 }
