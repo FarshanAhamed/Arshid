@@ -225,5 +225,24 @@ namespace Arshid.Web.Services
             }
 
         }
+
+        public async Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupId)
+        {
+
+            try
+            {
+                var users = await _userRepository.GetGroupUsers(groupId);
+                return users;
+            }
+            catch (Exception ex)
+            {
+                return new ResultData<IEnumerable<User>>
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
     }
 }

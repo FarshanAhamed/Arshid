@@ -18,5 +18,6 @@ namespace Arshid.Web.Interfaces
         Task<ResultData> DeleteAllUserLocations();
         Task<ResultData> SaveMultipleUserLocations(
             List<UserLocation> userLocations);
+        Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupID);
     }
 }

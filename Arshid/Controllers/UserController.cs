@@ -160,5 +160,29 @@ namespace Arshid.Controllers
                 return new ObjectResult(response);
             }
         }
+
+
+        [HttpGet("GetGroupUsers/{groupId}")]
+        public async Task<IActionResult> GetGroupUsers(int? groupId)
+        {
+            try
+            {
+                var result = await _userService.GetGroupUsers(groupId.GetValueOrDefault());
+
+                if (!result.Status)
+                {
+                    var errorResponse = ArshidResponse<Object>.SetResponse("AUF300", result.Message, null);
+                    return new ObjectResult(errorResponse);
+                }
+
+                var success = ArshidResponse<Object>.SetResponse("AUF100", result.Message, result.Data);
+                return new ObjectResult(success);
+            }
+            catch (Exception ex)
+            {
+                var response = ArshidResponse<Object>.SetResponse("AUF300", ex.Message, null);
+                return new ObjectResult(response);
+            }
+        }
     }
 }
