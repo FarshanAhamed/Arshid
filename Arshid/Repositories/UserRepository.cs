@@ -280,6 +280,53 @@ namespace Arshid.Web.Repositories
             }
         }
 
+        public async Task<ResultData<List<WayPoint>>> GenerateZonalHeatMap()
+        {
+            ResultData<List<WayPoint>> resultData = new ResultData<List<WayPoint>>();
+
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    // Take latest location of all user
+                    string sql = @"
+                                    SELECT l.Latitude, l.Longitude, l.UserID, l.GroupID, g.Name 
+                                    FROM userlocations l
+                                    LEFT JOIN Groups g ON (g.GroupID = l.GroupID)
+                                    WHERE l.AddedDate = 
+                                        (SELECT max(AddedDate) FROM userlocations WHERE userid=l.UserID);
+                                  ";
+                    var userList = await dbConnection.QueryAsync<User>(sql);
+
+                    // Get the current waypoint
+                    var waypointList = WayPoints.GetWayPointList();
+                    var waypointDict = WayPoints.GetWayPointDict();
+
+                    // Group the users by their group id
+                    var zoneList = userList.GroupBy(g => new { g.Latitude, g.Longitude })
+                        .Select(x => new WayPoint
+                        {
+                            Name = waypointDict[x.FirstOrDefault().Latitude + "" + x.FirstOrDefault().Longitude].Name,
+                            Latitude = x.FirstOrDefault().Latitude.GetValueOrDefault(),
+                            Longitude = x.FirstOrDefault().Longitude.GetValueOrDefault(),
+                            UserCount = x.Count()
+                        }).ToList();
+
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    resultData.Data = zoneList;
+                    return resultData;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
+
         public async Task<ResultData<Stats>> GetStats()
         {
             ResultData<Stats> resultData = new ResultData<Stats>();
@@ -290,8 +337,8 @@ namespace Arshid.Web.Repositories
                 {
                     string sql = @"
                                         SELECT *, 
-	                                        (SELECT COUNT(*) FROM GlobalUsers) AS UserCount,
-                                            (SELECT COUNT(*) FROM Groups) AS GroupCount 
+	                                        (SELECT COUNT(DISTINCT UserID) FROM UserLocations) AS UserCount,
+                                            (SELECT COUNT(DISTINCT GroupID) FROM UserLocations) AS GroupCount 
                                         FROM Groups
                                         FETCH FIRST 1 ROWS ONLY;
                                   ";
@@ -326,6 +373,8 @@ namespace Arshid.Web.Repositories
                                   ";
 
                     var userList = await dbConnection.QueryAsync<User>(sql);
+
+                    userList = userList.Skip(6);
 
                     var groupList = userList.GroupBy(g => g.GroupID)
                         .Select(x => new Group()

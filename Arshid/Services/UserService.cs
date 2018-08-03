@@ -116,6 +116,24 @@ namespace Arshid.Web.Services
 
         }
 
+        public async Task<ResultData<List<WayPoint>>> GenerateZonalHeatmap()
+        {
+            try
+            {
+                var userDetails = await _userRepository.GenerateZonalHeatMap();
+                return userDetails;
+            }
+            catch (Exception ex)
+            {
+                return new ResultData<List<WayPoint>>
+                {
+                    Status = false,
+                    Message = ex.Message
+                };
+            }
+
+        }
+
         public async Task<ResultData<Stats>> GetStats()
         {
             try
@@ -155,12 +173,12 @@ namespace Arshid.Web.Services
                 List<UserLocation> userLocations = new List<UserLocation>();
 
                 var specialIndex = 20;
-
+                
                 foreach (var group in groupList)
                 {
                     // find a location to assign the group
                     Random rnd = new Random();
-                    int index = rnd.Next(150);
+                    int index = 1 + rnd.Next(150);
 
                     if (index >= waypointList.Count)
                     {
@@ -184,7 +202,7 @@ namespace Arshid.Web.Services
                         {
                             int lostIndex = index + (-2 + rnd.Next(4));
 
-                            if (lostIndex < 0 || lostIndex >= waypointList.Count)
+                            if (lostIndex < 1 || lostIndex >= waypointList.Count)
                             {
                                 userLocations.Add(tmpUserLocation);
                             }
