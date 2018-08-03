@@ -208,5 +208,28 @@ namespace Arshid.Controllers
             }
         }
 
+        [HttpGet("GenerateZonalHeatmap")]
+        public async Task<IActionResult> GenerateZonalHeatmap()
+        {
+            try
+            {
+                var result = await _userService.GenerateZonalHeatmap();
+
+                if (!result.Status)
+                {
+                    var errorResponse = ArshidResponse<Object>.SetResponse("AUI300", result.Message, null);
+                    return new ObjectResult(errorResponse);
+                }
+
+                var success = ArshidResponse<Object>.SetResponse("AUI100", result.Message, result.Data);
+                return new ObjectResult(success);
+            }
+            catch (Exception ex)
+            {
+                var response = ArshidResponse<Object>.SetResponse("AUI300", ex.Message, null);
+                return new ObjectResult(response);
+            }
+        }
+
     }
 }

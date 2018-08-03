@@ -13,6 +13,7 @@ namespace Arshid.Web.Interfaces
         Task<ResultData<User>> GetUserLocation(int userId );
         Task<ResultData<User>> GetGroupLocation(int userId);
         Task<ResultData<List<Group>>> GenerateHeatmap();
+        Task<ResultData<List<WayPoint>>> GenerateZonalHeatmap();
         Task<ResultData<Stats>> GetStats();
         Task<ResultData> GenerateUserLocations();
         Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupId);

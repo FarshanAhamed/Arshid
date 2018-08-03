@@ -12,6 +12,8 @@ namespace Arshid.Web.Models
         public double Longitude { get; set; }
         public string Name { get; set; }
 
+        public int UserCount { get; set; }
+
         [JsonIgnore]
         public int Number { get; set; }
     }
