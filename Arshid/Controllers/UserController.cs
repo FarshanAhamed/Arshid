@@ -166,5 +166,30 @@ namespace Arshid.Controllers
 
 
 
+        [HttpPost("ResetUsers")]
+        public async Task<IActionResult> ResetDatabaseUsers()
+        {
+            try
+            {
+                var result = await _userService.ResetDatabase();
+
+                if (!result.Status)
+                {
+                    var errorResponse = ArshidResponse<Object>.SetResponse("AUH300", result.Message, null);
+                    return new ObjectResult(errorResponse);
+                }
+
+                var success = ArshidResponse<Object>.SetResponse("AUH100", result.Message, true);
+                return new ObjectResult(success);
+            }
+            catch (Exception ex)
+            {
+                var response = ArshidResponse<Object>.SetResponse("AUH300", ex.Message, null);
+                return new ObjectResult(response);
+            }
+        }
+
+
+
     }
 }

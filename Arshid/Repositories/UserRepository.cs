@@ -351,5 +351,36 @@ namespace Arshid.Web.Repositories
             }
         }
 
+
+        public async Task<ResultData> ResetDatabase(string newsql)
+        {
+            ResultData resultData = new ResultData();
+            try
+            {
+                using (IDbConnection dbConnection = _connectionManager.getNew())
+                {
+                    var result = await dbConnection.ExecuteAsync(newsql);
+
+                    if (result <= 0)
+                    {
+                        resultData.Status = false;
+                        resultData.Message = "Failed";
+                        return resultData;
+                    }
+
+                    resultData.Status = true;
+                    resultData.Message = "Success";
+                    return resultData;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resultData.Status = false;
+                resultData.Message = ex.Message;
+                return resultData;
+            }
+        }
+
     }
 }

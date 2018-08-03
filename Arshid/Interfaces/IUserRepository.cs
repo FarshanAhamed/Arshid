@@ -15,5 +15,6 @@ namespace Arshid.Web.Interfaces
         Task<ResultData<List<Group>>> GenerateHeatMap();
         Task<ResultData<Stats>> GetStats();
         Task<ResultData<IEnumerable<User>>> GetGroupUsers(int groupID);
+        Task<ResultData> ResetDatabase(string newsql);
     }
 }
